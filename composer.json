@@ -1,0 +1,31 @@
+{
+  "name": "straschek-io/nominatim",
+  "type": "typo3-cms-extension",
+  "description": "OSM geocoding service via Nominatim: https://wiki.openstreetmap.org/wiki/Nominatim",
+  "keywords": ["geo", "geolocation", "open street map", "osm", "nominatim", "web service"],
+  "authors": [
+    {
+      "name": "Michael Straschek",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "maxh/php-nominatim": "^2.0.0",
+    "guzzlehttp/guzzle": "dev-master as 6.3"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "StrIo\\Nominatim\\": "Classes"
+    }
+  },
+  "suggest": {
+    "friendsoftypo3/tt-address": "This package is able to geocode tt_address records."
+  },
+  "replace": {
+    "nominatim": "self.version",
+    "typo3-ter/nominatim": "self.version"
+  }
+}
