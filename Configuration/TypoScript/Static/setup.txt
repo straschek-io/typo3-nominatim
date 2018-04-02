@@ -1,0 +1,16 @@
+module.tx_nominatim {
+    tables {
+        tt_address {
+            sourceFields {
+                address = address
+                zip = zip
+                city = city
+                country = country
+            }
+            targetFields {
+                latitude = latitude
+                longitude = longitude
+            }
+        }
+    }
+}
