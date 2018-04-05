@@ -20,9 +20,11 @@ class SettingsService
         $fullTypoScript = $this->configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT
         );
-        if (!empty($fullTypoScript['module.']['tx_nominatim.']['tables.'])) {
+        if (empty($fullTypoScript['module.']['tx_nominatim.']['tables.'])) {
+            throw new \RuntimeException('No configuration given in TypoScript (module.tx_nominatim.tables)!', 1522863185);
+        } else {
             return GeneralUtility::removeDotsFromTS($fullTypoScript['module.']['tx_nominatim.']['tables.']);
         }
-        return [];
+
     }
 }
