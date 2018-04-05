@@ -45,6 +45,8 @@ class GeocodeTableDispatcher
                     $geocodeTableService->setTargetFields($tableConfiguration['targetFields']);
                     $geocodeTableService->geocodeAllUnProcessedRecords();
                 }
+            } else {
+                throw new \RuntimeException('No configuration given in TypoScript (module.tx_nominatim.tables)!', 1522863185);
             }
         } catch (NominatimException $e) {
             throw new \RuntimeException($e->getMessage(), $e->getCode());
