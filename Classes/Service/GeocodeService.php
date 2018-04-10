@@ -79,19 +79,30 @@ class GeocodeService
     {
         try {
             $cache = $this->initializeCache();
-            $cacheKey = 'nominatim-' . strtolower(str_replace(' ', '-', preg_replace('/[^0-9a-zA-Z ]/m', '', $searchString)));
+            $cacheKey = 'nominatim-' . strtolower(str_replace(
+                    ' ',
+                    '-',
+                    preg_replace('/[^0-9a-zA-Z ]/m', '', trim($searchString))
+                ));
 
             if (!$cache->has($cacheKey)) {
                 $search = $this->nominatim->newSearch();
                 $search->query($searchString);
                 $search->limit(1);
                 $result = $this->nominatim->find($search);
-                $coordinates = [
-                    'latitude' => $result[0]['lat'],
-                    'longitude' => $result[0]['lon'],
-                ];
+                if (!empty($result[0])) {
+                    $coordinates = [
+                        'status' => self::FETCH_STATUS_SUCCESS,
+                        'latitude' => $result[0]['lat'],
+                        'longitude' => $result[0]['lon'],
+                    ];
+                } else {
+                    $coordinates = [
+                        'status' => self::FETCH_STATUS_NORESULT,
+                    ];
+                }
+                $coordinates['queryString'] = $search->getQueryString();
                 $cache->set($cacheKey, $coordinates, []);
-                sleep(rand(1, 2));
             } else {
                 $coordinates = $cache->get($cacheKey);
             }
